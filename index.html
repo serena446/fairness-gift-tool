@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fairness Gift</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">FG</div>
+    <div>
+      <p class="eyebrow">FAIRNESS OPERATIONS · INTERNAL TOOL</p>
+      <h1>Fairness Gift</h1>
+    </div>
+    <span class="internal-badge">INTERNAL ONLY</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div>
+        <p class="eyebrow">GAME INTEGRITY WORKFLOW</p>
+        <h2>Fairness Gift Calculator</h2>
+        <p>Complete eligibility checks, calculate the gift, identify the correct handling path, and generate documentation.</p>
+      </div>
+      <div class="privacy-note"><strong>Confidentiality Reminder</strong><span>Never disclose the 7-day or monthly frequency limits to players.</span></div>
+    </section>
+
+    <form id="giftForm" novalidate>
+      <section class="card">
+        <div class="section-heading"><span>01</span><div><h3>Ticket & Eligibility Check</h3><p>Confirm whether this ticket qualifies for the Fairness Gift workflow.</p></div></div>
+        <div class="grid grid-4">
+          <label>Ticket ID<input id="ticketId" placeholder="e.g. 123456"></label>
+          <label>Player ID<input id="playerId" placeholder="e.g. RJC1ATVT"></label>
+          <label>Complaint Type<select id="complaintType"><option value="integrity">Game Fairness / RNG / Losing Streak</option><option value="freeplay">Free Play / Bonus Only</option><option value="other">Other Issue</option></select></label>
+          <label>Account Status<select id="accountStatus"><option value="active">Active</option><option value="frozen">A-Del / Frozen</option></select></label>
+        </div>
+        <div class="check-row">
+          <label class="check"><input type="checkbox" id="askedGift"><span>Player explicitly requested Free Play / a Gift</span></label>
+          <label class="check"><input type="checkbox" id="legalThreat"><span>Legal threat: lawsuit / sue / lawyer / legal action / attorney</span></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-heading"><span>02</span><div><h3>Account Data</h3><p>Enter all values in SC.</p></div></div>
+        <div class="grid grid-5">
+          <label>Total Purchase<input id="totalPurchase" type="number" min="0" step="0.01" value="0"></label>
+          <label>Total Redemption<input id="totalRedemption" type="number" min="0" step="0.01" value="0"></label>
+          <label>Pending Redemption<input id="pendingRedemption" type="number" min="0" step="0.01" value="0"></label>
+          <label>Current Played SC<input id="currentPlayed" type="number" min="0" step="0.01" value="0"></label>
+          <label>Current Unplayed SC<input id="currentUnplayed" type="number" min="0" step="0.01" value="0"></label>
+        </div>
+        <div class="purchase-block">
+          <div><strong>Highest Purchase Among Latest 5</strong><small>Base Gift = this amount × 10%</small></div>
+          <input id="highestRecentPurchase" aria-label="Highest Purchase Among Latest 5" type="number" min="0" step="0.01" value="0">
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-heading"><span>03</span><div><h3>Emotion & Frequency Check</h3><p>A legal threat automatically overrides the emotion to Level 3 and requires immediate T2 escalation.</p></div></div>
+        <div class="grid grid-3">
+          <label>Emotion Level<select id="emotion"><option value="0">Level 0 · Calm (+0)</option><option value="1">Level 1 · Frustrated (+5)</option><option value="2">Level 2 · Angry (+10)</option><option value="3">Level 3 · Extreme (+20)</option></select></label>
+          <label>Last Gift Issued At<input id="lastGiftAt" type="datetime-local"><small>Leave blank if no gift was issued in the past 7 days.</small></label>
+          <label>Gifts Issued This Calendar Month<input id="monthGiftCount" type="number" min="0" step="1" value="0"></label>
+        </div>
+        <label>Reason / Player Complaint Summary<textarea id="summary" rows="3" placeholder="Briefly summarize the player's fairness, RNG, or losing-streak complaint. This will be included in the generated records."></textarea></label>
+      </section>
+
+      <section class="card negotiation-card">
+        <div class="section-heading"><span>04</span><div><h3>Offer Status</h3><p>Paid 5–10 players must receive an offer and confirm it before issuance.</p></div></div>
+        <div class="grid grid-2">
+          <label>Current Stage<select id="offerStatus"><option value="initial">Initial Calculation / No Response Yet</option><option value="agreed">Player Accepted Current Amount</option><option value="round1">Round 1 Rejected — Prepare Increased Offer</option><option value="round2">Round 2 Rejected — Escalate</option></select></label>
+          <div class="hint-box">Paid 5–8: +10 SC per round. Paid 9–10: +20 SC per round. Maximum 2 rounds and never exceed the tier cap.</div>
+        </div>
+      </section>
+
+      <button class="primary" type="submit">Calculate & Generate Handling Plan <span>→</span></button>
+    </form>
+
+    <section id="results" class="results hidden" aria-live="polite">
+      <div id="decisionCard" class="decision-card">
+        <div><p class="eyebrow">RECOMMENDED ACTION</p><h2 id="decisionTitle"></h2><p id="decisionText"></p></div>
+        <div class="amount-box"><span id="amountLabel">Current Gift</span><strong><span id="giftAmount">0</span> SC</strong></div>
+      </div>
+      <div id="routeCard" class="route-card">
+        <span>ISSUANCE ROUTE</span>
+        <strong id="routeTitle">—</strong>
+        <p id="routeText"></p>
+      </div>
+      <div class="metrics">
+        <div><span>Paid Level</span><strong id="paidLevel">—</strong></div>
+        <div><span>Net Loss</span><strong id="netLoss">—</strong></div>
+        <div><span>Base Gift</span><strong id="baseGift">—</strong></div>
+        <div><span>Emotion Bonus</span><strong id="emotionBonus">—</strong></div>
+      </div>
+      <div id="warnings" class="warnings"></div>
+
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="customer">Player Reply</button>
+        <button type="button" class="tab" data-tab="note">Internal Note</button>
+        <button type="button" class="tab" data-tab="side">Side Conversation</button>
+        <button type="button" class="tab" data-tab="message">In-game Message</button>
+      </div>
+      <div id="standardTemplate" class="template-panel">
+        <pre id="templateText"></pre>
+        <button type="button" id="copyBtn" class="copy-btn">Copy Text</button>
+      </div>
+      <div id="messageTemplate" class="message-panel hidden">
+        <div class="message-field reason-field"><span>Reason</span><p id="messageReason"></p></div>
+        <div class="message-field"><span>Title</span><p id="messageTitle"></p><button type="button" class="field-copy" data-copy="messageTitle">Copy Title</button></div>
+        <div class="message-field"><span>Content</span><p id="messageContent"></p><button type="button" class="field-copy" data-copy="messageContent">Copy Content</button></div>
+      </div>
+      <div class="actions">
+        <a href="https://forms.gle/J2fTveiuRhtk7R8n6" target="_blank" rel="noopener" class="form-link">Open Google Form After Issuance ↗</a>
+        <span>Only the issuing agent submits the form: T1 for direct issuance, or T2 when T2 issues the gift.</span>
+      </div>
+    </section>
+  </main>
+  <footer>Internal decision-support tool · SOP rules embedded · Always verify source data before issuance</footer>
+  <script src="core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
