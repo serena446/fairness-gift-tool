@@ -1,22 +1,22 @@
 # Fairness Gift
 
-离线静态网页工具。双击 `index.html` 即可使用，无需安装或联网（仅 Google Form 跳转需要网络）。
+An offline, static web tool. Open `index.html` directly—no installation or internet connection is required, except when opening the Google Form.
 
-## 使用顺序
+## Workflow
 
-1. 填写工单、账户、最近 5 笔 purchase、情绪与频控数据。
-2. 点击“计算并生成处理方案”。
-3. 按结论直发、报价或升级，并复制对应模板。
-4. 实际发放后，由发放人立即提交 Google Form。
+1. Enter the ticket, account, highest purchase among the latest five, emotion, and gift-frequency data.
+2. Select **Calculate & Generate Handling Plan**.
+3. Follow the displayed issuance route, offer, or escalation instructions and copy the required templates.
+4. After issuing the gift, the issuer must submit the Google Form immediately.
 
-## 规则说明
+## Rules
 
-- Paid Level 由 Total Purchase 自动判定。
-- 10% 计算结果保留最多两位小数；SOP 未规定整数取整方式，因此工具不擅自进位。
-- 工具不保存或上传任何输入数据。
-- 工具用于辅助执行 SOP，最终发放前仍需人工核对后台数据。
+- Paid Level is determined automatically from Total Purchase.
+- The 10% calculation keeps up to two decimal places. The SOP does not define integer rounding, so the tool does not round up automatically.
+- The tool does not save or upload any entered data.
+- This tool supports SOP execution. Always verify source data before issuance.
 
-## 本地测试
+## Local Test
 
 ```bash
 node test.js
